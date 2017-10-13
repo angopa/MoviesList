@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     private BaseApi baseApi;
 
-    private ArrayAdapter<String> arrayAdapter;
+    private CustomAdapter arrayAdapter;
 
-    private List<String> items = new ArrayList<>();
+    private ArrayList<Result> items = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         ListView movieContainer = findViewById(R.id.movie_list_container);
 
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        arrayAdapter = new CustomAdapter(this.getBaseContext(), items);
 
         movieContainer.setAdapter(arrayAdapter);
     }
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onResponse");
                 if (response.body() != null) {
                     for (Result result : response.body().getResults()) {
-                        items.add(result.getTitle());
+                        items.add(result);
                     }
                     arrayAdapter.notifyDataSetChanged();
                 }
